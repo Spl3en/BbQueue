@@ -169,8 +169,8 @@ bb_queue_put_last (BbQueue *q, void *data)
 
 	if (bb_queue_get_length(q) == 1)
 	{
-		// Il n'y a qu'un seul élément, celui recherché;
-		// Il est donc déjà à la fin
+		// There is only one element, the one we are searching for;
+		// Therefore it is already at the end
 		return 1;
 	}
 
@@ -181,7 +181,7 @@ bb_queue_put_last (BbQueue *q, void *data)
 
 	if (q->last == c)
 	{
-		// Déjà à la fin
+		// Already at the end
 		return 1;
 	}
 
@@ -212,8 +212,8 @@ bb_queue_put_first (BbQueue *q, void *data)
 
 	if (bb_queue_get_length(q) == 1)
 	{
-		// Il n'y a qu'un seul élément, celui recherché;
-		// Il est donc déjà au début
+		// There is only one element, the one we are searching for;
+		// Therefore it is already at the beginning
 		return 1;
 	}
 
@@ -224,7 +224,7 @@ bb_queue_put_first (BbQueue *q, void *data)
 
 	if (q->first == c)
 	{
-		// Déjà au début
+		// DAlready at the beginning
 		return 1;
 	}
 
@@ -689,7 +689,7 @@ bb_queue_free (BbQueue *p)
 
 	for (i = 0; i < len; i++)
 	{
-		// bb_queue_pop s'occupe de free le bbchild
+		// bb_queue_pop handles the freeing of the bbchild
 		bb_queue_pop(p);
 	}
 
