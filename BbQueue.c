@@ -345,6 +345,20 @@ bb_queue_exists (BbQueue *q, void *data)
 	return 0;
 }
 
+EXPORT_FUNCTION int
+bb_queue_string_exists (BbQueue *q, char *string)
+{
+	BbChild *c = NULL;
+
+	foreach_bbqueue(q, c)
+	{
+		if (strcmp(q->data, string) == 0)
+			return 1;
+	}
+
+	return 0;
+}
+
 EXPORT_FUNCTION void
 bb_queue_push (BbQueue *q, void *data)
 {

@@ -10,7 +10,7 @@
  *	  - It is possible to use it as a queue/stack, via bbq_add / bbq_pop and its derivatives;
  * 	  - It is possible to use it as a double-chained list, first by retrieving the corresponding BbChild via bb_queue_pick_child and its derivatives.
  *	  Thus, the getters bb_child_get_next/_prev are available, and the data pointed by its children as well via ->data.
- *	  Note that __bb_child_get_next/_prev are faster, but will crash the program if the BbChild passed as parameter is invalid (no check).  
+ *	  Note that __bb_child_get_next/_prev are faster, but will crash the program if the BbChild passed as parameter is invalid (no check).
  *
  *	Changelog :
  *
@@ -22,7 +22,7 @@
  *	  [+] v1.2		(18 / 11 / 2010)
  *		  [ADD]	   The structure now contains two new elements: index and current
  *					  - index is a simple integer; It can freely be modified by the user. It is useful when remembering the index of an element is necessary.
- *					  - current is a pointer to the last BbChild picked. 
+ *					  - current is a pointer to the last BbChild picked.
  *					  It is useful in the case that we want to get access to the next BbChild via q->current->next without having to use bb_queue_pick_nth,
  *					  if the pointer to the BbChild happens to be lost.
  *
@@ -371,6 +371,9 @@ bb_queue_switch              (BbQueue *queue, void *data1, void *data2);
 
 int
 bb_queue_exists	             (BbQueue *queue, void *data);
+
+int
+bb_queue_string_exists       (BbQueue *q, char *string);
 
 void
 bb_queue_do                  (BbQueue *queue, void (* do_func)());
