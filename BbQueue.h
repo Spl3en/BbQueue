@@ -79,6 +79,7 @@
 /* Dependances */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #ifdef BBQ_EXPORT_FUNCTION
 	#ifdef WIN32

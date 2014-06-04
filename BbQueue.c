@@ -352,7 +352,7 @@ bb_queue_string_exists (BbQueue *q, char *string)
 
 	foreach_bbqueue(q, c)
 	{
-		if (strcmp(q->data, string) == 0)
+		if (strcmp(c->data, string) == 0)
 			return 1;
 	}
 
