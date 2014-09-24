@@ -1,5 +1,17 @@
 #include "BbQueue.h"
 
+BbQueue *
+bb_queue_reverse (BbQueue *queue)
+{
+	BbQueue *reverse = bb_queue_new();
+
+	foreach_bbqueue_item (queue, void *item) {
+		bb_queue_push (reverse, item);
+	}
+
+	return reverse;
+}
+
 EXPORT_FUNCTION BbQueue *
 bb_queue_new (void)
 {
@@ -119,7 +131,7 @@ EXPORT_FUNCTION void *
 bb_queue_pick_nth (BbQueue *q, int pos)
 {
 	if (pos < 0)
-		pos = bb_queue_get_length(q) + pos + 1;
+		pos = bb_queue_get_length(q) + pos;
 
 	BbChild *c = NULL;
 
@@ -169,8 +181,8 @@ bb_queue_put_last (BbQueue *q, void *data)
 
 	if (bb_queue_get_length(q) == 1)
 	{
-		// There is only one element, the one we are searching for;
-		// Therefore it is already at the end
+		// Il n'y a qu'un seul élément, celui recherché;
+		// Il est donc déjà à la fin
 		return 1;
 	}
 
@@ -181,7 +193,7 @@ bb_queue_put_last (BbQueue *q, void *data)
 
 	if (q->last == c)
 	{
-		// Already at the end
+		// Déjà à la fin
 		return 1;
 	}
 
@@ -212,8 +224,8 @@ bb_queue_put_first (BbQueue *q, void *data)
 
 	if (bb_queue_get_length(q) == 1)
 	{
-		// There is only one element, the one we are searching for;
-		// Therefore it is already at the beginning
+		// Il n'y a qu'un seul élément, celui recherché;
+		// Il est donc déjà au début
 		return 1;
 	}
 
@@ -224,7 +236,7 @@ bb_queue_put_first (BbQueue *q, void *data)
 
 	if (q->first == c)
 	{
-		// DAlready at the beginning
+		// Déjà au début
 		return 1;
 	}
 
@@ -339,20 +351,6 @@ bb_queue_exists (BbQueue *q, void *data)
 	foreach_bbqueue(q, c)
 	{
 		if (c->data == data)
-			return 1;
-	}
-
-	return 0;
-}
-
-EXPORT_FUNCTION int
-bb_queue_string_exists (BbQueue *q, char *string)
-{
-	BbChild *c = NULL;
-
-	foreach_bbqueue(q, c)
-	{
-		if (strcmp(c->data, string) == 0)
 			return 1;
 	}
 
@@ -648,9 +646,9 @@ bb_queue_pick_child_nth (BbQueue *q, int pos)
 
 	if (pos <= (len / 2))
 	{
-		loop = 1;
+		loop = 0;
 
-		foreach_bbqueue(q, c)
+		foreach_bbqueue (q, c)
 		{
 			if (loop++ == pos)
 				return c;
@@ -659,7 +657,7 @@ bb_queue_pick_child_nth (BbQueue *q, int pos)
 
 	else
 	{
-		loop = len;
+		loop = len - 1;
 
 		for (c = q->last;
 			 c != NULL;
@@ -703,7 +701,7 @@ bb_queue_free (BbQueue *p)
 
 	for (i = 0; i < len; i++)
 	{
-		// bb_queue_pop handles the freeing of the bbchild
+		// bb_queue_pop s'occupe de free le bbchild
 		bb_queue_pop(p);
 	}
 
@@ -787,16 +785,6 @@ bb_queue_free_all (BbQueue *q, void (* free_func)())
 
 	free(q);
 }
-
-EXPORT_FUNCTION void
-bb_queue_free_elements (BbQueue *q, void (* free_func)())
-{
-	while (bb_queue_get_length(q))
-	{
-		free_func(bb_queue_pop(q));
-	}
-}
-
 
 EXPORT_FUNCTION void
 bb_queue_clear (BbQueue *q)
