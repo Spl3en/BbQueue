@@ -79,20 +79,13 @@
 /* Dépendances */
 #include <stdio.h>
 #include <stdlib.h>
-
-#ifdef BBQ_EXPORT_FUNCTION
-	#ifdef WIN32
-		#define EXPORT_FUNCTION __declspec(dllexport)
-	#endif
-#endif
-
-#ifndef EXPORT_FUNCTION
-	#define EXPORT_FUNCTION
-#endif
+#include "Utils/Utils.h"
 
 /*
 *   Working Macros
 */
+
+
 /* BbChild */
 #define __bb_child_get_next(child)	((child)->next)
 #define __bb_child_get_prev(child)	((child)->prev)

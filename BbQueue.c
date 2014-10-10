@@ -12,7 +12,7 @@ bb_queue_reverse (BbQueue *queue)
 	return reverse;
 }
 
-EXPORT_FUNCTION BbQueue *
+BbQueue *
 bb_queue_new (void)
 {
 	BbQueue *q = malloc (sizeof(BbQueue));
@@ -22,7 +22,7 @@ bb_queue_new (void)
 	return q;
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_init (BbQueue *q)
 {
 	q->len   = 0;
@@ -30,7 +30,7 @@ bb_queue_init (BbQueue *q)
 	q->last  = NULL;
 }
 
-EXPORT_FUNCTION BbQueue *
+BbQueue *
 bb_queue_copy (BbQueue *q)
 {
 	BbQueue *cp 	= bb_queue_new();
@@ -44,7 +44,7 @@ bb_queue_copy (BbQueue *q)
 	return cp;
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_add (BbQueue *q, void *data)
 {
 	BbChild *c = bb_child_new(data);
@@ -52,7 +52,7 @@ bb_queue_add (BbQueue *q, void *data)
 	bb_queue_add_child(q, c);
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_add_child (BbQueue *q, BbChild *c)
 {
 	if (bb_queue_get_length(q) == 0)
@@ -71,7 +71,7 @@ bb_queue_add_child (BbQueue *q, BbChild *c)
 	bb_queue_inc_length(q);
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_add_nth (BbQueue *q, void *data, int pos)
 {
 	if (pos < 0)
@@ -127,7 +127,7 @@ bb_queue_add_nth (BbQueue *q, void *data, int pos)
 	bb_queue_inc_length(q);
 }
 
-EXPORT_FUNCTION void *
+void *
 bb_queue_pick_nth (BbQueue *q, int pos)
 {
 	if (pos < 0)
@@ -143,7 +143,7 @@ bb_queue_pick_nth (BbQueue *q, int pos)
 	return c->data;
 }
 
-EXPORT_FUNCTION void *
+void *
 bb_queue_replace_nth (BbQueue *q, void *data, int nth)
 {
 	BbChild *c = bb_queue_pick_child_nth(q, nth);
@@ -161,7 +161,7 @@ bb_queue_replace_nth (BbQueue *q, void *data, int nth)
 	return ret;
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_replace (BbQueue *q, void *data1, void *data2)
 {
 	BbChild *c = bb_queue_pick_child(q, data1);
@@ -174,7 +174,7 @@ bb_queue_replace (BbQueue *q, void *data1, void *data2)
 	c->data = data2;
 }
 
-EXPORT_FUNCTION int
+int
 bb_queue_put_last (BbQueue *q, void *data)
 {
 	BbChild *c = NULL;
@@ -217,7 +217,7 @@ bb_queue_put_last (BbQueue *q, void *data)
 	return 1;
 }
 
-EXPORT_FUNCTION int
+int
 bb_queue_put_first (BbQueue *q, void *data)
 {
 	BbChild *c = NULL;
@@ -260,7 +260,7 @@ bb_queue_put_first (BbQueue *q, void *data)
 	return 1;
 }
 
-EXPORT_FUNCTION int
+int
 bb_queue_remv (BbQueue *q, void *data)
 {
 	BbChild *c = NULL;
@@ -300,7 +300,7 @@ bb_queue_remv (BbQueue *q, void *data)
 	return 1;
 }
 
-EXPORT_FUNCTION void *
+void *
 bb_queue_remv_nth (BbQueue *q, int nth)
 {
 	void *data = NULL;
@@ -343,7 +343,7 @@ bb_queue_remv_nth (BbQueue *q, int nth)
 	return data;
 }
 
-EXPORT_FUNCTION int
+int
 bb_queue_exists (BbQueue *q, void *data)
 {
 	BbChild *c = NULL;
@@ -357,7 +357,7 @@ bb_queue_exists (BbQueue *q, void *data)
 	return 0;
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_push (BbQueue *q, void *data)
 {
 	BbChild *c = bb_child_new(data);
@@ -378,7 +378,7 @@ bb_queue_push (BbQueue *q, void *data)
 	bb_queue_inc_length(q);
 }
 
-EXPORT_FUNCTION void *
+void *
 bb_queue_get_first (BbQueue *q)
 {
 	if (bb_queue_get_length(q) <= 0)
@@ -405,7 +405,7 @@ bb_queue_get_first (BbQueue *q)
 	return data;
 }
 
-EXPORT_FUNCTION void *
+void *
 bb_queue_pop (BbQueue *q)
 {
 	if (bb_queue_get_length(q) <= 0)
@@ -433,7 +433,7 @@ bb_queue_pop (BbQueue *q)
 	return data;
 }
 
-EXPORT_FUNCTION int
+int
 bb_queue_get_index (BbQueue *q, void *data)
 {
 	BbChild *c;
@@ -450,7 +450,7 @@ bb_queue_get_index (BbQueue *q, void *data)
 	return -1;
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_insert_after_bb_child (BbQueue *q, BbChild *before, void *data)
 {
 	BbChild *newchild = NULL;
@@ -471,7 +471,7 @@ bb_queue_insert_after_bb_child (BbQueue *q, BbChild *before, void *data)
 		bb_queue_add(q, data);
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_insert_after (BbQueue *q, void *before, void *data)
 {
 	BbChild *before_child = bb_queue_pick_child(q, before);
@@ -480,7 +480,7 @@ bb_queue_insert_after (BbQueue *q, void *before, void *data)
 }
 
 
-EXPORT_FUNCTION void
+void
 bb_queue_insert_before_bb_child (BbQueue *q, BbChild *after, void *data)
 {
 	BbChild *newchild = NULL;
@@ -502,7 +502,7 @@ bb_queue_insert_before_bb_child (BbQueue *q, BbChild *after, void *data)
 }
 
 
-EXPORT_FUNCTION void
+void
 bb_queue_insert_before (BbQueue *q, void *after, void *data)
 {
 	BbChild *before_child = bb_queue_pick_child(q, after);
@@ -510,7 +510,7 @@ bb_queue_insert_before (BbQueue *q, void *after, void *data)
 	bb_queue_insert_after_bb_child(q, before_child, data);
 }
 
-EXPORT_FUNCTION void *
+void *
 bb_queue_pick_first (BbQueue *q)
 {
 	BbChild *child;
@@ -523,7 +523,7 @@ bb_queue_pick_first (BbQueue *q)
 	return child->data;
 }
 
-EXPORT_FUNCTION void *
+void *
 bb_queue_pick_last (BbQueue *q)
 {
 	BbChild *child;
@@ -536,7 +536,7 @@ bb_queue_pick_last (BbQueue *q)
 	return child->data;
 }
 
-EXPORT_FUNCTION void *
+void *
 bb_queue_get_nth (BbQueue *q, int nth)
 {
 	void *data = bb_queue_pick_nth(q, nth);
@@ -547,7 +547,7 @@ bb_queue_get_nth (BbQueue *q, int nth)
 	return data;
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_switch (BbQueue *q, void *data1, void *data2)
 {
 	BbChild *c1 = bb_queue_pick_child(q, data1);
@@ -563,49 +563,49 @@ bb_queue_switch (BbQueue *q, void *data1, void *data2)
 	c2->data = data1;
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_debug (BbQueue *q)
 {
 	bb_queue_do_enumerate(q, bb_child_debug);
 	printf("\n");
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_debug_custom (BbQueue *q, void (*debug_function)())
 {
 	bb_queue_do_enumerate(q, debug_function);
 	printf("\n");
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_debug_custom_data (BbQueue *q, void (*debug_function)())
 {
 	bb_queue_do_enumerate_data (q, debug_function);
 	printf("\n");
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_debug_string (BbQueue *q)
 {
 	bb_queue_do_enumerate(q, bb_child_debug_string);
 	printf("\n");
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_debug_integer (BbQueue *q)
 {
 	bb_queue_do_enumerate(q, bb_child_debug_integer);
 	printf("\n");
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_debug_raw_integer (BbQueue *q)
 {
 	bb_queue_do_enumerate(q, bb_child_debug_raw_integer);
 	printf("\n");
 }
 
-EXPORT_FUNCTION BbChild *
+BbChild *
 bb_queue_pick_child (BbQueue *q, void *data)
 {
 	BbChild *c = NULL;
@@ -624,7 +624,7 @@ bb_queue_pick_child (BbQueue *q, void *data)
 	return NULL;
 }
 
-EXPORT_FUNCTION BbChild *
+BbChild *
 bb_queue_pick_child_nth (BbQueue *q, int pos)
 {
 	if (pos < 0)
@@ -671,7 +671,7 @@ bb_queue_pick_child_nth (BbQueue *q, int pos)
 	return NULL;
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_concat (BbQueue *q1, BbQueue *q2)
 {
 	void *data = NULL;
@@ -682,7 +682,7 @@ bb_queue_concat (BbQueue *q1, BbQueue *q2)
 	}
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_concat_nth (BbQueue *q1, BbQueue *q2, int nth)
 {
 	void *data = NULL;
@@ -693,7 +693,7 @@ bb_queue_concat_nth (BbQueue *q1, BbQueue *q2, int nth)
 	}
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_free (BbQueue *p)
 {
 	int i;
@@ -708,7 +708,7 @@ bb_queue_free (BbQueue *p)
 	free(p);
 }
 
-EXPORT_FUNCTION void bb_queue_bubble_sort (BbQueue *q)
+void bb_queue_bubble_sort (BbQueue *q)
 {
 	int en_desordre = 1;
 	BbChild *child = NULL;
@@ -735,7 +735,7 @@ EXPORT_FUNCTION void bb_queue_bubble_sort (BbQueue *q)
 	}
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_do (BbQueue *q, void (*do_func)())
 {
 	BbChild *child;
@@ -746,7 +746,7 @@ bb_queue_do (BbQueue *q, void (*do_func)())
 	}
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_do_enumerate (BbQueue *q, void (*do_func)())
 {
 	BbChild *child;
@@ -759,7 +759,7 @@ bb_queue_do_enumerate (BbQueue *q, void (*do_func)())
 	}
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_do_enumerate_data (BbQueue *q, void (*do_func)())
 {
 	BbChild *child;
@@ -772,7 +772,7 @@ bb_queue_do_enumerate_data (BbQueue *q, void (*do_func)())
 	}
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_free_all (BbQueue *q, void (* free_func)())
 {
 	void *data = NULL;
@@ -786,7 +786,7 @@ bb_queue_free_all (BbQueue *q, void (* free_func)())
 	free(q);
 }
 
-EXPORT_FUNCTION void
+void
 bb_queue_clear (BbQueue *q)
 {
 	while (bb_queue_get_length(q))
@@ -799,7 +799,7 @@ bb_queue_clear (BbQueue *q)
 	  BbChild functions
 ==============================*/
 
-EXPORT_FUNCTION BbChild *
+BbChild *
 bb_child_new (void *data)
 {
 	BbChild *p = malloc (sizeof(BbChild));
@@ -813,7 +813,7 @@ bb_child_new (void *data)
 	return p;
 }
 
-EXPORT_FUNCTION BbChild *
+BbChild *
 bb_child_get_next (BbChild *child)
 {
 	if (child == NULL)
@@ -822,7 +822,7 @@ bb_child_get_next (BbChild *child)
 	return __bb_child_get_next(child);
 }
 
-EXPORT_FUNCTION BbChild *
+BbChild *
 bb_child_get_prev (BbChild *child)
 {
 	if (child == NULL)
@@ -831,31 +831,31 @@ bb_child_get_prev (BbChild *child)
 	return __bb_child_get_prev(child);
 }
 
-EXPORT_FUNCTION void
+void
 bb_child_debug (BbChild *child)
 {
 	printf("0x%x\n", (int)child->data);
 }
 
-EXPORT_FUNCTION void
+void
 bb_child_debug_string (BbChild *child)
 {
 	printf("%s\n", (char *)child->data);
 }
 
-EXPORT_FUNCTION void
+void
 bb_child_debug_integer (BbChild *child)
 {
 	printf("%d\n", (*(int*)child->data));
 }
 
-EXPORT_FUNCTION void
+void
 bb_child_debug_raw_integer (BbChild *child)
 {
 	printf("%d\n", (int)child->data);
 }
 
-EXPORT_FUNCTION void
+void
 bb_child_unref (BbChild *p)
 {
 	free(p);
