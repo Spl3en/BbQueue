@@ -1,5 +1,8 @@
 #include "BbQueue.h"
 
+#define __DEBUG_OBJECT__ "BbQueue"
+#include "dbg/dbg.h"
+
 BbQueue *
 bb_queue_reverse (BbQueue *queue)
 {
@@ -514,6 +517,16 @@ void *
 bb_queue_pick_first (BbQueue *q)
 {
 	BbChild *child;
+
+	if (!q) {
+		dbg ("BbQueue is NULL");
+		return NULL;
+	}
+
+	if (bb_queue_get_length(q) <= 0) {
+		dbg ("BbQueue length <= 0");
+		return NULL;
+	}
 
 	child = bb_queue_pick_first_child(q);
 
