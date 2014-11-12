@@ -6,7 +6,7 @@
 BbQueue *
 bb_queue_reverse (BbQueue *queue)
 {
-	BbQueue *reverse = bb_queue_new();
+	BbQueue *reverse = bb_queue_new ();
 
 	foreach_bbqueue_item (queue, void *item) {
 		bb_queue_push (reverse, item);
@@ -18,9 +18,9 @@ bb_queue_reverse (BbQueue *queue)
 BbQueue *
 bb_queue_new (void)
 {
-	BbQueue *q = malloc (sizeof(BbQueue));
+	BbQueue *q = malloc (sizeof (BbQueue));
 
-	bb_queue_init(q);
+	bb_queue_init (q);
 
 	return q;
 }
@@ -36,7 +36,7 @@ bb_queue_init (BbQueue *q)
 BbQueue *
 bb_queue_copy (BbQueue *q)
 {
-	BbQueue *cp 	= bb_queue_new();
+	BbQueue *cp 	= bb_queue_new ();
 	void 	*item 	= NULL;
 
 	foreach_bbqueue_item (q, item)
@@ -50,15 +50,15 @@ bb_queue_copy (BbQueue *q)
 void
 bb_queue_add (BbQueue *q, void *data)
 {
-	BbChild *c = bb_child_new(data);
+	BbChild *c = bb_child_new (data);
 
-	bb_queue_add_child(q, c);
+	bb_queue_add_child (q, c);
 }
 
 void
 bb_queue_add_child (BbQueue *q, BbChild *c)
 {
-	if (bb_queue_get_length(q) == 0)
+	if (bb_queue_get_length (q) == 0)
 	{
 		q->first = c;
 		q->last  = c;
@@ -71,7 +71,7 @@ bb_queue_add_child (BbQueue *q, BbChild *c)
 		q->last = c;
 	}
 
-	bb_queue_inc_length(q);
+	bb_queue_inc_length (q);
 }
 
 void
@@ -79,19 +79,19 @@ bb_queue_add_nth (BbQueue *q, void *data, int pos)
 {
 	if (pos < 0)
 	{
-		printf("%s : pos < 0\n", __FUNCTION__);
+		printf ("%s : pos < 0\n", __FUNCTION__);
 		return;
 	}
 
 	BbChild *childPrev = NULL;
 	BbChild *childNext = NULL;
-	BbChild *c = bb_child_new(data);
+	BbChild *c = bb_child_new (data);
 
-	int len = bb_queue_get_length(q);
+	int len = bb_queue_get_length (q);
 
 	if (pos > len || len == 0)
 	{
-		bb_queue_add(q, data);
+		bb_queue_add (q, data);
 		return;
 	}
 
@@ -111,10 +111,10 @@ bb_queue_add_nth (BbQueue *q, void *data, int pos)
 
 	else
 	{
-		childPrev = bb_queue_pick_child_nth(q, pos);
+		childPrev = bb_queue_pick_child_nth (q, pos);
 
 		if (childPrev == NULL)
-			childPrev = bb_queue_pick_last_child(q);
+			childPrev = bb_queue_pick_last_child (q);
 
 		childNext = childPrev->next;
 
@@ -127,18 +127,18 @@ bb_queue_add_nth (BbQueue *q, void *data, int pos)
 		c->next = childNext;
 	}
 
-	bb_queue_inc_length(q);
+	bb_queue_inc_length (q);
 }
 
 void *
 bb_queue_pick_nth (BbQueue *q, int pos)
 {
 	if (pos < 0)
-		pos = bb_queue_get_length(q) + pos;
+		pos = bb_queue_get_length (q) + pos;
 
 	BbChild *c = NULL;
 
-	c = bb_queue_pick_child_nth(q, pos);
+	c = bb_queue_pick_child_nth (q, pos);
 
 	if (c == NULL)
 		return NULL;
@@ -149,12 +149,12 @@ bb_queue_pick_nth (BbQueue *q, int pos)
 void *
 bb_queue_replace_nth (BbQueue *q, void *data, int nth)
 {
-	BbChild *c = bb_queue_pick_child_nth(q, nth);
+	BbChild *c = bb_queue_pick_child_nth (q, nth);
 	void *ret = NULL;
 
 	if (c  == NULL)
 	{
-		printf("%s : child is NULL\n", __FUNCTION__);
+		printf ("%s : child is NULL\n", __FUNCTION__);
 		return NULL;
 	}
 
@@ -167,10 +167,10 @@ bb_queue_replace_nth (BbQueue *q, void *data, int nth)
 void
 bb_queue_replace (BbQueue *q, void *data1, void *data2)
 {
-	BbChild *c = bb_queue_pick_child(q, data1);
+	BbChild *c = bb_queue_pick_child (q, data1);
 	if (c == NULL)
 	{
-		printf("%s : child is NULL\n", __FUNCTION__);
+		printf ("%s : child is NULL\n", __FUNCTION__);
 		return;
 	}
 
@@ -182,14 +182,14 @@ bb_queue_put_last (BbQueue *q, void *data)
 {
 	BbChild *c = NULL;
 
-	if (bb_queue_get_length(q) == 1)
+	if (bb_queue_get_length (q) == 1)
 	{
 		// Il n'y a qu'un seul élément, celui recherché;
 		// Il est donc déjà à la fin
 		return 1;
 	}
 
-	c = bb_queue_pick_child(q, data);
+	c = bb_queue_pick_child (q, data);
 
 	if (c == NULL)
 		return 0;
@@ -225,14 +225,14 @@ bb_queue_put_first (BbQueue *q, void *data)
 {
 	BbChild *c = NULL;
 
-	if (bb_queue_get_length(q) == 1)
+	if (bb_queue_get_length (q) == 1)
 	{
 		// Il n'y a qu'un seul élément, celui recherché;
 		// Il est donc déjà au début
 		return 1;
 	}
 
-	c = bb_queue_pick_child(q, data);
+	c = bb_queue_pick_child (q, data);
 
 	if (c == NULL)
 		return 0;
@@ -268,12 +268,12 @@ bb_queue_remv (BbQueue *q, void *data)
 {
 	BbChild *c = NULL;
 
-	c = bb_queue_pick_child(q, data);
+	c = bb_queue_pick_child (q, data);
 
 	if (c == NULL)
 		return 0;
 
-	if (bb_queue_get_length(q) == 1)
+	if (bb_queue_get_length (q) == 1)
 	{
 		q->first = NULL;
 		q->last = NULL;
@@ -297,8 +297,8 @@ bb_queue_remv (BbQueue *q, void *data)
 		c->prev->next = c->next;
 	}
 
-	bb_child_unref(c);
-	bb_queue_dec_length(q);
+	bb_child_unref (c);
+	bb_queue_dec_length (q);
 
 	return 1;
 }
@@ -309,14 +309,14 @@ bb_queue_remv_nth (BbQueue *q, int nth)
 	void *data = NULL;
 	BbChild *c = NULL;
 
-	c = bb_queue_pick_child_nth(q, nth);
+	c = bb_queue_pick_child_nth (q, nth);
 
 	if (c == NULL)
 		return NULL;
 
 	data = c->data;
 
-	if (bb_queue_get_length(q) == 1)
+	if (bb_queue_get_length (q) == 1)
 	{
 		q->first = NULL;
 		q->last = NULL;
@@ -340,8 +340,8 @@ bb_queue_remv_nth (BbQueue *q, int nth)
 		c->prev->next = c->next;
 	}
 
-	bb_child_unref(c);
-	bb_queue_dec_length(q);
+	bb_child_unref (c);
+	bb_queue_dec_length (q);
 
 	return data;
 }
@@ -351,7 +351,7 @@ bb_queue_exists (BbQueue *q, void *data)
 {
 	BbChild *c = NULL;
 
-	foreach_bbqueue(q, c)
+	foreach_bbqueue (q, c)
 	{
 		if (c->data == data)
 			return 1;
@@ -363,9 +363,9 @@ bb_queue_exists (BbQueue *q, void *data)
 void
 bb_queue_push (BbQueue *q, void *data)
 {
-	BbChild *c = bb_child_new(data);
+	BbChild *c = bb_child_new (data);
 
-	if (bb_queue_get_length(q) == 0)
+	if (bb_queue_get_length (q) == 0)
 	{
 		q->first = c;
 		q->last = c;
@@ -378,19 +378,19 @@ bb_queue_push (BbQueue *q, void *data)
 		q->first = c;
 	}
 
-	bb_queue_inc_length(q);
+	bb_queue_inc_length (q);
 }
 
 void *
 bb_queue_get_first (BbQueue *q)
 {
-	if (bb_queue_get_length(q) <= 0)
+	if (bb_queue_get_length (q) <= 0)
 		return NULL;
 
 	BbChild *c = q->first;
 	void *data = c->data;
 
-	if (bb_queue_get_length(q) == 1)
+	if (bb_queue_get_length (q) == 1)
 	{
 		q->first = NULL;
 		q->last = NULL;
@@ -402,8 +402,8 @@ bb_queue_get_first (BbQueue *q)
 		q->first = q->first->next;
 	}
 
-	bb_queue_dec_length(q);
-	bb_child_unref(c);
+	bb_queue_dec_length (q);
+	bb_child_unref (c);
 
 	return data;
 }
@@ -411,14 +411,14 @@ bb_queue_get_first (BbQueue *q)
 void *
 bb_queue_pop (BbQueue *q)
 {
-	if (bb_queue_get_length(q) <= 0)
+	if (bb_queue_get_length (q) <= 0)
 		return NULL;
 
-	BbChild *c = bb_queue_pick_last_child(q);
+	BbChild *c = bb_queue_pick_last_child (q);
 
 	void *data = c->data;
 
-	if (bb_queue_get_length(q) == 1)
+	if (bb_queue_get_length (q) == 1)
 	{
 		q->first = NULL;
 		q->last = NULL;
@@ -430,8 +430,8 @@ bb_queue_pop (BbQueue *q)
 		q->last = q->last->prev;
 	}
 
-	bb_queue_dec_length(q);
-	bb_child_unref(c);
+	bb_queue_dec_length (q);
+	bb_child_unref (c);
 
 	return data;
 }
@@ -442,7 +442,7 @@ bb_queue_get_index (BbQueue *q, void *data)
 	BbChild *c;
 	int index = 0;
 
-	foreach_bbqueue(q, c)
+	foreach_bbqueue (q, c)
 	{
 		if (c->data == data)
 			return index;
@@ -458,28 +458,28 @@ bb_queue_insert_after_bb_child (BbQueue *q, BbChild *before, void *data)
 {
 	BbChild *newchild = NULL;
 
-	if (before != bb_queue_pick_last_child(q))
+	if (before != bb_queue_pick_last_child (q))
 	{
-		newchild = bb_child_new(data);
+		newchild = bb_child_new (data);
 
 		before->next->prev = newchild;
 		newchild->next = before->next;
 		newchild->prev = before;
 		before->next = newchild;
 
-		bb_queue_inc_length(q);
+		bb_queue_inc_length (q);
 	}
 
 	else
-		bb_queue_add(q, data);
+		bb_queue_add (q, data);
 }
 
 void
 bb_queue_insert_after (BbQueue *q, void *before, void *data)
 {
-	BbChild *before_child = bb_queue_pick_child(q, before);
+	BbChild *before_child = bb_queue_pick_child (q, before);
 
-	bb_queue_insert_after_bb_child(q, before_child, data);
+	bb_queue_insert_after_bb_child (q, before_child, data);
 }
 
 
@@ -488,29 +488,29 @@ bb_queue_insert_before_bb_child (BbQueue *q, BbChild *after, void *data)
 {
 	BbChild *newchild = NULL;
 
-	if (after != bb_queue_pick_first_child(q))
+	if (after != bb_queue_pick_first_child (q))
 	{
-		newchild = bb_child_new(data);
+		newchild = bb_child_new (data);
 
 		after->prev->next = newchild;
 		newchild->prev = after->prev;
 		newchild->next = after;
 		after->prev = newchild;
 
-		bb_queue_inc_length(q);
+		bb_queue_inc_length (q);
 	}
 
 	else
-		bb_queue_push(q, data);
+		bb_queue_push (q, data);
 }
 
 
 void
 bb_queue_insert_before (BbQueue *q, void *after, void *data)
 {
-	BbChild *before_child = bb_queue_pick_child(q, after);
+	BbChild *before_child = bb_queue_pick_child (q, after);
 
-	bb_queue_insert_after_bb_child(q, before_child, data);
+	bb_queue_insert_after_bb_child (q, before_child, data);
 }
 
 void *
@@ -519,16 +519,16 @@ bb_queue_pick_first (BbQueue *q)
 	BbChild *child;
 
 	if (!q) {
-		dbg ("BbQueue is NULL");
+		printf ("BbQueue is NULL");
 		return NULL;
 	}
 
-	if (bb_queue_get_length(q) <= 0) {
-		dbg ("BbQueue length <= 0");
+	if (bb_queue_get_length (q) <= 0) {
+		printf ("BbQueue length <= 0");
 		return NULL;
 	}
 
-	child = bb_queue_pick_first_child(q);
+	child = bb_queue_pick_first_child (q);
 
 	if (child == NULL)
 		return NULL;
@@ -541,7 +541,7 @@ bb_queue_pick_last (BbQueue *q)
 {
 	BbChild *child;
 
-	child = bb_queue_pick_last_child(q);
+	child = bb_queue_pick_last_child (q);
 
 	if (child == NULL)
 		return NULL;
@@ -552,10 +552,10 @@ bb_queue_pick_last (BbQueue *q)
 void *
 bb_queue_get_nth (BbQueue *q, int nth)
 {
-	void *data = bb_queue_pick_nth(q, nth);
+	void *data = bb_queue_pick_nth (q, nth);
 
 	if (data != NULL)
-		bb_queue_remv(q, data);
+		bb_queue_remv (q, data);
 
 	return data;
 }
@@ -563,12 +563,12 @@ bb_queue_get_nth (BbQueue *q, int nth)
 void
 bb_queue_switch (BbQueue *q, void *data1, void *data2)
 {
-	BbChild *c1 = bb_queue_pick_child(q, data1);
-	BbChild *c2 = bb_queue_pick_child(q, data2);
+	BbChild *c1 = bb_queue_pick_child (q, data1);
+	BbChild *c2 = bb_queue_pick_child (q, data2);
 
 	if (c1 == NULL || c2 == NULL)
 	{
-		printf("%s : child is NULL\n", __FUNCTION__);
+		printf ("%s : child is NULL\n", __FUNCTION__);
 		return;
 	}
 
@@ -579,43 +579,43 @@ bb_queue_switch (BbQueue *q, void *data1, void *data2)
 void
 bb_queue_debug (BbQueue *q)
 {
-	bb_queue_do_enumerate(q, bb_child_debug);
-	printf("\n");
+	bb_queue_do_enumerate (q, bb_child_debug);
+	printf ("\n");
 }
 
 void
-bb_queue_debug_custom (BbQueue *q, void (*debug_function)())
+bb_queue_debug_custom (BbQueue *q, void (*debug_function) ())
 {
-	bb_queue_do_enumerate(q, debug_function);
-	printf("\n");
+	bb_queue_do_enumerate (q, debug_function);
+	printf ("\n");
 }
 
 void
-bb_queue_debug_custom_data (BbQueue *q, void (*debug_function)())
+bb_queue_debug_custom_data (BbQueue *q, void (*debug_function) ())
 {
 	bb_queue_do_enumerate_data (q, debug_function);
-	printf("\n");
+	printf ("\n");
 }
 
 void
 bb_queue_debug_string (BbQueue *q)
 {
-	bb_queue_do_enumerate(q, bb_child_debug_string);
-	printf("\n");
+	bb_queue_do_enumerate (q, bb_child_debug_string);
+	printf ("\n");
 }
 
 void
 bb_queue_debug_integer (BbQueue *q)
 {
-	bb_queue_do_enumerate(q, bb_child_debug_integer);
-	printf("\n");
+	bb_queue_do_enumerate (q, bb_child_debug_integer);
+	printf ("\n");
 }
 
 void
 bb_queue_debug_raw_integer (BbQueue *q)
 {
-	bb_queue_do_enumerate(q, bb_child_debug_raw_integer);
-	printf("\n");
+	bb_queue_do_enumerate (q, bb_child_debug_raw_integer);
+	printf ("\n");
 }
 
 BbChild *
@@ -624,7 +624,7 @@ bb_queue_pick_child (BbQueue *q, void *data)
 	BbChild *c = NULL;
 	int pos = 0;
 
-	foreach_bbqueue(q, c)
+	foreach_bbqueue (q, c)
 	{
 		if (c->data == data)
 		{
@@ -642,20 +642,20 @@ bb_queue_pick_child_nth (BbQueue *q, int pos)
 {
 	if (pos < 0)
 	{
-		printf("%s : pos is < 0\n", __FUNCTION__);
+		printf ("%s : pos is < 0\n", __FUNCTION__);
 		return NULL;
 	}
 
 	BbChild *c = NULL;
 
 	int loop,
-		len = bb_queue_get_length(q);
+		len = bb_queue_get_length (q);
 
 	if (len == pos)
-		return bb_queue_pick_last_child(q);
+		return bb_queue_pick_last_child (q);
 
 	if (pos == 0)
-		return bb_queue_pick_first_child(q);
+		return bb_queue_pick_first_child (q);
 
 	if (pos <= (len / 2))
 	{
@@ -689,9 +689,9 @@ bb_queue_concat (BbQueue *q1, BbQueue *q2)
 {
 	void *data = NULL;
 
-	foreach_bbqueue_item(q2, data)
+	foreach_bbqueue_item (q2, data)
 	{
-		bb_queue_add(q1, data);
+		bb_queue_add (q1, data);
 	}
 }
 
@@ -700,9 +700,9 @@ bb_queue_concat_nth (BbQueue *q1, BbQueue *q2, int nth)
 {
 	void *data = NULL;
 
-	foreach_bbqueue_item_reversed(q2, data)
+	foreach_bbqueue_item_reversed (q2, data)
 	{
-		bb_queue_add_nth(q1, data, nth);
+		bb_queue_add_nth (q1, data, nth);
 	}
 }
 
@@ -710,15 +710,15 @@ void
 bb_queue_free (BbQueue *p)
 {
 	int i;
-	int len = bb_queue_get_length(p);
+	int len = bb_queue_get_length (p);
 
 	for (i = 0; i < len; i++)
 	{
 		// bb_queue_pop s'occupe de free le bbchild
-		bb_queue_pop(p);
+		bb_queue_pop (p);
 	}
 
-	free(p);
+	free (p);
 }
 
 void bb_queue_bubble_sort (BbQueue *q)
@@ -749,62 +749,62 @@ void bb_queue_bubble_sort (BbQueue *q)
 }
 
 void
-bb_queue_do (BbQueue *q, void (*do_func)())
+bb_queue_do (BbQueue *q, void (*do_func) ())
 {
 	BbChild *child;
 
-	foreach_bbqueue(q, child)
+	foreach_bbqueue (q, child)
 	{
-		do_func(child);
+		do_func (child);
 	}
 }
 
 void
-bb_queue_do_enumerate (BbQueue *q, void (*do_func)())
-{
-	BbChild *child;
-	int i = 0;
-
-	foreach_bbqueue(q, child)
-	{
-		printf("[%d] : ", i++);
-		do_func(child);
-	}
-}
-
-void
-bb_queue_do_enumerate_data (BbQueue *q, void (*do_func)())
+bb_queue_do_enumerate (BbQueue *q, void (*do_func) ())
 {
 	BbChild *child;
 	int i = 0;
 
-	foreach_bbqueue(q, child)
+	foreach_bbqueue (q, child)
 	{
-		printf("[%d] : ", i++);
-		do_func(child->data);
+		printf ("[%d] : ", i++);
+		do_func (child);
 	}
 }
 
 void
-bb_queue_free_all (BbQueue *q, void (* free_func)())
+bb_queue_do_enumerate_data (BbQueue *q, void (*do_func) ())
+{
+	BbChild *child;
+	int i = 0;
+
+	foreach_bbqueue (q, child)
+	{
+		printf ("[%d] : ", i++);
+		do_func (child->data);
+	}
+}
+
+void
+bb_queue_free_all (BbQueue *q, void (* free_func) ())
 {
 	void *data = NULL;
 
-	while (bb_queue_get_length(q))
+	while (bb_queue_get_length (q))
 	{
-		data = bb_queue_pop(q);
-		free_func(data);
+		data = bb_queue_pop (q);
+		free_func (data);
 	}
 
-	free(q);
+	free (q);
 }
 
 void
 bb_queue_clear (BbQueue *q)
 {
-	while (bb_queue_get_length(q))
+	while (bb_queue_get_length (q))
 	{
-		bb_queue_pop(q);
+		bb_queue_pop (q);
 	}
 }
 
@@ -815,7 +815,7 @@ bb_queue_clear (BbQueue *q)
 BbChild *
 bb_child_new (void *data)
 {
-	BbChild *p = malloc (sizeof(BbChild));
+	BbChild *p = malloc (sizeof (BbChild));
 	if (p == NULL)
 		return NULL;
 
@@ -832,7 +832,7 @@ bb_child_get_next (BbChild *child)
 	if (child == NULL)
 		return NULL;
 
-	return __bb_child_get_next(child);
+	return __bb_child_get_next (child);
 }
 
 BbChild *
@@ -841,35 +841,35 @@ bb_child_get_prev (BbChild *child)
 	if (child == NULL)
 		return NULL;
 
-	return __bb_child_get_prev(child);
+	return __bb_child_get_prev (child);
 }
 
 void
 bb_child_debug (BbChild *child)
 {
-	printf("0x%x\n", (int)child->data);
+	printf ("0x%x\n", (int) child->data);
 }
 
 void
 bb_child_debug_string (BbChild *child)
 {
-	printf("%s\n", (char *)child->data);
+	printf ("%s\n", (char *) child->data);
 }
 
 void
 bb_child_debug_integer (BbChild *child)
 {
-	printf("%d\n", (*(int*)child->data));
+	printf ("%d\n", (* (int*) child->data));
 }
 
 void
 bb_child_debug_raw_integer (BbChild *child)
 {
-	printf("%d\n", (int)child->data);
+	printf ("%d\n", (int) child->data);
 }
 
 void
 bb_child_unref (BbChild *p)
 {
-	free(p);
+	free (p);
 }

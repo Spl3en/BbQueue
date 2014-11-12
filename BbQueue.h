@@ -10,16 +10,16 @@
  *	  - Il est possible de l'utiliser comme une file/pile, via bbq_add / bbq_push / bbq_pop et ses dérivées
  *	  - Il est possible de l'utiliser comme une liste doublement chaînée, en récupérant tout d'abord le BbChild correspondant via bb_queue_pick_child et dérivées
  *	  Ainsi, les accesseurs bb_child_get_next/_prev sont disponibles, et les données pointées par ses childs par ->data.
- *	  A noter que __bb_child_get_next/_prev sont plus rapides, mais crashera le programme si le BbChild passé en paramètre est invalide (pas de check).
+ *	  A noter que __bb_child_get_next/_prev sont plus rapides, mais crashera le programme si le BbChild passé en paramètre est invalide (pas de check) .
  *
  *	Changelog :
  *
- *		[+] v1.1 :		(10 / 11 / 2010)
+ *		[+] v1.1 :		 (10 / 11 / 2010)
  *			[ADD]	   bb_queue_remv_nth (BbQueue *, int nth)
  *			[ADD]	   bb_queue_get_nth  (BbQueue *, int nth)
  *		  [FIX]	   bb_queue_remv : Length fixed
  *
- *	  [+] v1.2		(18 / 11 / 2010)
+ *	  [+] v1.2		 (18 / 11 / 2010)
  *		  [ADD]	   La structure contient maintenant deux nouveau éléments : index et current
  *					  - index est un simple entier; Il est modifiable à la convenance de l'utilisateur. Il est utile quand il faut se rappeler de l'index d'un élément.
  *					  - current est un pointeur sur le dernier BbChild pické.
@@ -30,11 +30,11 @@
  *					  bb_queue_pick_next (BbQueue *queue, int refresh) : Retourne la data pointé par le BbChild suivant du current. refresh sert à spécifier si le pointeur courant doit être actualisé ou non
  *					  bb_queue_pick_prev (BbQueue *queue, int refresh) : idem que bb_queue_get_next pour le BbChild précédent.
  *
- *		  [ADD]	   bb_queue_free_all (BbQueue *queue, (void *) free_func()); : Permet de libérer la mémoire de la BbQueue ainsi que celle des éléments enfilés.
+ *		  [ADD]	   bb_queue_free_all (BbQueue *queue, (void *) free_func ()); : Permet de libérer la mémoire de la BbQueue ainsi que celle des éléments enfilés.
  *					  Il s'agit de la fonction la plus efficace pour effacer l'ensemble des données liées à la BbQueue.
  *
- *	  [+] v1.3		(03 / 12 / 2010)
- *		  [ADD]	   bb_queue_do (BbQueue *queue, void (* do_func)()) : Permet d'effectuer une fonction sur l'ensemble de tous les éléments de la BbQueue
+ *	  [+] v1.3		 (03 / 12 / 2010)
+ *		  [ADD]	   bb_queue_do (BbQueue *queue, void (* do_func) ()) : Permet d'effectuer une fonction sur l'ensemble de tous les éléments de la BbQueue
  *		  [ADD]	   bb_queue_replace_nth : Remplace une data par une autre à un index fixé, et renvoie celle removée
  *		  [ADD]	   bb_queue_replace	 : Remplace une data par une autre
  *		  [FIX]	   bb_queue_add_nth	 : fix de la longueur de la liste chaînée
@@ -45,19 +45,19 @@
  *		  [FIX]	   bb_queue_pop : Correction d'un bug de conception (!)
  *		  [FIX]	   bb_queue_pick_first : La macro a été implémentée en fonction pour raison de sécurité
  *
- *	  [+] v1.5		(12 / 03 / 2011)
+ *	  [+] v1.5		 (12 / 03 / 2011)
  *		  [FIX]	   Pointeur "current" et fonctions associées (cf v1.2) deprecated, mauvaise conception et aucune utilité
  *		  [FIX]	   Fusion de BbQueue.c et BbChild.c pour des raisons pratiques
  *		  [ADD]	   bb_queue_add_array : transforme le tableau 1 dimension en BbQueue, en respectant l'ordre croissant
  *		  [ADD]	   bb_queue_copy : Copie une BbQueue
  *
- *	  [+] v1.6		(19 / 10 / 2011)
+ *	  [+] v1.6		 (19 / 10 / 2011)
  *		  [FIX]	   Optimisation de bb_queue_insert_before/after
- *		  [ADD]	   bb_queue_insert_before/after_child()
+ *		  [ADD]	   bb_queue_insert_before/after_child ()
  *		  [ADD]	   bb_queue_concat
  *			[ADD]		foreach_bb_queue_item_reversed
  *
- *	  [+] v1.7		(08 / 01 / 2012)
+ *	  [+] v1.7		 (08 / 01 / 2012)
  *		  [FIX]	   Fix d'un bug mineur sur bb_queue_foreach_*
  *		  [ADD]	   bb_queue_put_last : prend un élément et le met à la fin, équivalent optimisé d'un remv + add
  *		  [ADD]	   bb_queue_put_first : prend un élément et le met au début, équivalent optimisé d'un remv + push
@@ -67,7 +67,7 @@
  *		  [FIX]	   bb_queue_remv : Les pointeurs first et last n'étaient pas correctement remis à NULL si la taille de la bb_queue est égale à 1 avant remv
  *
  *
- *		[+] v1.8		(06 / 03 / 2012)
+ *		[+] v1.8		 (06 / 03 / 2012)
  *			[ADD]		bb_queue_pick_nth : accepte dorénavant les entiers négatifs pour deuxième argument; L'élément pické sera pris à partir de la fin de la BbQueue. (-1 renverra le dernier)
  *
  *
@@ -87,124 +87,124 @@
 
 
 /* BbChild */
-#define __bb_child_get_next(child)	((child)->next)
-#define __bb_child_get_prev(child)	((child)->prev)
+#define __bb_child_get_next(child) 	 ((child) ->next)
+#define __bb_child_get_prev(child) 	 ((child) ->prev)
 
 /* BbQueue */
-#define bb_queue_get_length(q)		  ((q)->len)
-#define bb_queue_inc_length(q)		  ((q)->len++)
-#define bb_queue_dec_length(q)		  ((q)->len--)
-#define bb_queue_pick_last_child(q)	 ((q)->last)
-#define bb_queue_pick_first_child(q)	((q)->first)
-#define bb_queue_is_empty(q)			(bb_queue_get_length((q)) == 0)
+#define bb_queue_get_length(q) 		  ((q) ->len)
+#define bb_queue_inc_length(q) 		  ((q) ->len++)
+#define bb_queue_dec_length(q) 		  ((q) ->len--)
+#define bb_queue_pick_last_child(q) 	 ((q) ->last)
+#define bb_queue_pick_first_child(q) 	 ((q) ->first)
+#define bb_queue_is_empty(q) 			 (bb_queue_get_length ((q)) == 0)
 
 #define break_foreach					   	\
 do {										\
 	__child_foreach = (BbChild *) -1;	   	\
 	continue;							   	\
-} while (0)								   	\
+} while (0) 								   	\
 
-#define foreach_bbqueue(queue, child)			   	\
+#define foreach_bbqueue(queue, child) 			   	\
 	for (										   	\
-		(child) = (queue)->first;					   \
-		(child) != NULL;							  	\
-		(child) = (child)->next						 \
-	)											   	\
+		 (child) = (queue) ->first;					   \
+		 (child) != NULL;							  	\
+		 (child) = (child) ->next						 \
+	) 											   	\
 
 
-#define foreach_bbqueue_item(queue, item)					   \
+#define foreach_bbqueue_item(queue, item) 					   \
 	for (													   \
-		BbChild *__child_foreach = (queue)->first,			  \
+		BbChild *__child_foreach = (queue) ->first,			  \
 		*__bb_loop = 0;										 \
 		__child_foreach != NULL;								\
-		__child_foreach = (__child_foreach != (BbChild *)-1) ?  \
+		__child_foreach = (__child_foreach != (BbChild *) -1) ?  \
 		 __child_foreach->next : NULL,						  \
-		__bb_loop = (BbChild*)0								 \
-	)														   \
+		__bb_loop = (BbChild*) 0								 \
+	) 														   \
 		for (												   \
 			item = __child_foreach->data;						\
 			__bb_loop != (BbChild*) 1;						  \
 			__bb_loop = (BbChild*) 1							\
-		)													   \
+		) 													   \
 
-#define foreach_bbqueue_item_counter(queue, item, counter)	   \
+#define foreach_bbqueue_item_counter(queue, item, counter) 	   \
 	for (													   \
-		BbChild *__child_foreach = (queue)->first,			  \
+		BbChild *__child_foreach = (queue) ->first,			  \
 		*__bb_loop = 0;										 \
 		__child_foreach != NULL;								\
-		__child_foreach = (__child_foreach != (BbChild *)-1) ?  \
+		__child_foreach = (__child_foreach != (BbChild *) -1) ?  \
 		 __child_foreach->next : NULL,						  \
-		__bb_loop = (BbChild*)0,\
+		__bb_loop = (BbChild*) 0,\
 		counter++								 \
-	)														   \
+	) 														   \
 		for (												   \
 			item = __child_foreach->data;						\
 			__bb_loop != (BbChild*) 1;						  \
 			__bb_loop = (BbChild*) 1							\
-		)													   \
+		) 													   \
 
-#define is_last_bbqueue_item(queue)		\
-	((__child_foreach == (queue)->last))
+#define is_last_bbqueue_item(queue) 		\
+	 ((__child_foreach == (queue) ->last))
 
-#define foreach_bbqueue_item_raw(queue, item)				   \
+#define foreach_bbqueue_item_raw(queue, item) 				   \
 	for (													   \
-		BbChild *__child_foreach = (queue)->first,			  \
+		BbChild *__child_foreach = (queue) ->first,			  \
 		*__bb_loop = 0;										 \
 		__child_foreach != NULL;								\
-		__child_foreach = (__child_foreach != (BbChild *)-1) ?  \
+		__child_foreach = (__child_foreach != (BbChild *) -1) ?  \
 		 __child_foreach->next : NULL,						  \
-		__bb_loop = (BbChild*)0								 \
-	)														   \
+		__bb_loop = (BbChild*) 0								 \
+	) 														   \
 		for (												   \
 			item = (int) __child_foreach->data;				\
 			__bb_loop != (BbChild*) 1;						  \
 			__bb_loop = (BbChild*) 1							\
-		)													   \
+		) 													   \
 
-#define foreach_bbqueue_item_reversed(queue, item)			  \
+#define foreach_bbqueue_item_reversed(queue, item) 			  \
 	for (													   \
-		BbChild *__child_foreach = (queue)->last,				\
+		BbChild *__child_foreach = (queue) ->last,				\
 		*__bb_loop = 0;										 \
 		__child_foreach != NULL;								\
-		__child_foreach = (__child_foreach != (BbChild *)-1) ?  \
+		__child_foreach = (__child_foreach != (BbChild *) -1) ?  \
 		 __child_foreach->prev : NULL,						  \
-		__bb_loop = (BbChild*)0								 \
-	)														   \
+		__bb_loop = (BbChild*) 0								 \
+	) 														   \
 		for (												   \
 			item = __child_foreach->data;					 \
 			__bb_loop != (BbChild*) 1;						  \
 			__bb_loop = (BbChild*) 1							\
-		)													   \
+		) 													   \
 
 
-#define foreach_bbqueue_item_reversed_raw(queue, item)			\
+#define foreach_bbqueue_item_reversed_raw(queue, item) 			\
 	for (													   	\
-		BbChild *__child_foreach = (queue)->last,				\
+		BbChild *__child_foreach = (queue) ->last,				\
 		*__bb_loop = 0;										 	\
 		__child_foreach != NULL;								\
-		__child_foreach = (__child_foreach != (BbChild *)-1) ?  \
+		__child_foreach = (__child_foreach != (BbChild *) -1) ?  \
 		 __child_foreach->prev : NULL,						  	\
-		__bb_loop = (BbChild*)0								 	\
-	)														   	\
+		__bb_loop = (BbChild*) 0								 	\
+	) 														   	\
 		for (												   	\
 			item = (int) __child_foreach->data;			 	\
 			__bb_loop != (BbChild*) 1;						  	\
 			__bb_loop = (BbChild*) 1							\
-		)													   	\
+		) 													   	\
 
 
-#define bb_queue_add_array(queue, data, count)	  	\
+#define bb_queue_add_array(queue, data, count) 	  	\
 do {													\
 	int __array_counter;								\
 	for (__array_counter = 0;					   	\
 		 __array_counter < (count);				  	\
 		 __array_counter++) {					   	\
-		bb_queue_add((queue), (data)[__array_counter]);	\
+		bb_queue_add ((queue) , (data) [__array_counter]);	\
 	}											   	\
-} while (0)										 	\
+} while (0) 										 	\
 
 #define bb_queue_add_raw(queue, data) 		\
-	(bb_queue_add(queue, (void*)(data)))
+	 (bb_queue_add (queue, (void*) (data)) )
 
 #define bb_queue_local_decl() \
 {\
@@ -241,17 +241,17 @@ struct _BbQueue
 
 /* BbChild */
 BbChild *
-bb_child_new					(void *data);
+bb_child_new					 (void *data);
 
 /* BbQueue */
 BbQueue *
-bb_queue_new					(void);
+bb_queue_new					 (void);
 
 BbQueue *
 bb_queue_copy				   (BbQueue *queue);
 
 void
-bb_queue_init 					(BbQueue *q);
+bb_queue_init 					 (BbQueue *q);
 
 	/**=================
 		  @Methods
@@ -279,7 +279,7 @@ bb_child_debug_raw_integer	  (BbChild *child);
 /* BbQueue */
 	/*! Add */
 void
-bb_queue_add					(BbQueue *queue, void *data);
+bb_queue_add					 (BbQueue *queue, void *data);
 /* [head][][][][tail] <- [] */
 
 void
@@ -287,7 +287,7 @@ bb_queue_push				   (BbQueue *queue, void *data);
 /* [] -> [head][][][][tail] */
 
 void
-bb_queue_add_nth				(BbQueue *queue, void *data, int pos);
+bb_queue_add_nth				 (BbQueue *queue, void *data, int pos);
 /* [head][] -> [nth] -> [][tail] */
 
 	/*! Get : remove from the BbQueue and return the data */
@@ -296,18 +296,18 @@ bb_queue_get_first			  (BbQueue *queue);
 /* [head] <- [][][][tail] */
 
 void *
-bb_queue_pop					(BbQueue *queue);
+bb_queue_pop					 (BbQueue *queue);
 /* [head][][][] -> [tail] */
 
 void *
-bb_queue_get_nth				(BbQueue *queue, int nth);
+bb_queue_get_nth				 (BbQueue *queue, int nth);
 /* [head][] - - [nth] - -> [][tail] */
 
 void *
-bb_queue_replace_nth			(BbQueue *queue, void *data, int nth);
+bb_queue_replace_nth			 (BbQueue *queue, void *data, int nth);
 
 void
-bb_queue_replace				(BbQueue *queue, void *data1, void *data2);
+bb_queue_replace				 (BbQueue *queue, void *data1, void *data2);
 
 	/*!
 		- Pick : Same as get, but prevent removing the child from the BbQueue
@@ -317,7 +317,7 @@ void *
 bb_queue_pick_nth			   (BbQueue *queue, int pos);
 
 void *
-bb_queue_pick_first 			(BbQueue *queue);
+bb_queue_pick_first 			 (BbQueue *queue);
 
 void *
 bb_queue_pick_last			  (BbQueue *queue);
@@ -325,7 +325,7 @@ bb_queue_pick_last			  (BbQueue *queue);
 	/*! Child Accessors : For optimizations */
 
 void
-bb_queue_add_child 				(BbQueue *queue, BbChild *c);
+bb_queue_add_child 				 (BbQueue *queue, BbChild *c);
 
 BbChild *
 bb_queue_pick_child			 (BbQueue *queue, void *data);
@@ -351,10 +351,10 @@ void
 bb_queue_debug_integer		  (BbQueue *queue);
 
 void
-bb_queue_debug_custom		   (BbQueue *queue, void (*debug_function)());
+bb_queue_debug_custom		   (BbQueue *queue, void (*debug_function) ());
 
 void
-bb_queue_debug_custom_data 		(BbQueue *queue, void (*debug_function)());
+bb_queue_debug_custom_data 		 (BbQueue *queue, void (*debug_function) ());
 
 void
 bb_queue_debug_raw_integer	  (BbQueue *queue);
@@ -365,7 +365,7 @@ void
 bb_queue_insert_after_child	 (BbQueue *queue, BbChild *before, void *data);
 
 void
-bb_queue_insert_before_child	(BbQueue *queue, BbChild *after, void *data);
+bb_queue_insert_before_child	 (BbQueue *queue, BbChild *after, void *data);
 
 void
 bb_queue_insert_after		   (BbQueue *queue, void *after, void *data);
@@ -380,30 +380,30 @@ int
 bb_queue_exists				 (BbQueue *queue, void *data);
 
 void
-bb_queue_do					 (BbQueue *queue, void (* do_func)());
+bb_queue_do					 (BbQueue *queue, void (* do_func) ());
 
 void
-bb_queue_do_enumerate		   (BbQueue *queue, void (* do_func)());
+bb_queue_do_enumerate		   (BbQueue *queue, void (* do_func) ());
 
 void
-bb_queue_do_enumerate_data 		(BbQueue *q, void (*do_func)());
+bb_queue_do_enumerate_data 		 (BbQueue *q, void (*do_func) ());
 
 void
 bb_queue_concat				 (BbQueue *queue_dest, BbQueue *queue);
 
 void
-bb_queue_concat_nth 			(BbQueue *q1, BbQueue *q2, int nth);
+bb_queue_concat_nth 			 (BbQueue *q1, BbQueue *q2, int nth);
 
 int
-bb_queue_put_first 				(BbQueue *queue, void *data);
+bb_queue_put_first 				 (BbQueue *queue, void *data);
 
 int
-bb_queue_put_last 				(BbQueue *queue, void *data);
+bb_queue_put_last 				 (BbQueue *queue, void *data);
 
 	/*! Sort functions */
 
 void
-bb_queue_bubble_sort	   		(BbQueue *queue);
+bb_queue_bubble_sort	   		 (BbQueue *queue);
 
 	/**=================
 		@Destructors
@@ -418,7 +418,7 @@ void
 bb_queue_free				   (BbQueue *queue);
 
 void
-bb_queue_free_all			   (BbQueue *queue, void (*free_func)());
+bb_queue_free_all			   (BbQueue *queue, void (*free_func) ());
 
 void
 bb_queue_clear				  (BbQueue *queue);
