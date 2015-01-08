@@ -87,130 +87,130 @@
 
 
 /* BbChild */
-#define __bb_child_get_next(child) 	 ((child) ->next)
-#define __bb_child_get_prev(child) 	 ((child) ->prev)
+#define __bb_child_get_next(child) 	 ((child)->next)
+#define __bb_child_get_prev(child) 	 ((child)->prev)
 
 /* BbQueue */
-#define bb_queue_get_length(q) 		  ((q) ->len)
-#define bb_queue_inc_length(q) 		  ((q) ->len++)
-#define bb_queue_dec_length(q) 		  ((q) ->len--)
-#define bb_queue_pick_last_child(q) 	 ((q) ->last)
-#define bb_queue_pick_first_child(q) 	 ((q) ->first)
+#define bb_queue_get_length(q) 		  ((q)->len)
+#define bb_queue_inc_length(q) 		  ((q)->len++)
+#define bb_queue_dec_length(q) 		  ((q)->len--)
+#define bb_queue_pick_last_child(q) 	 ((q)->last)
+#define bb_queue_pick_first_child(q) 	 ((q)->first)
 #define bb_queue_is_empty(q) 			 (bb_queue_get_length ((q)) == 0)
 
-#define break_foreach					   	\
-do {										\
-	__child_foreach = (BbChild *) -1;	   	\
-	continue;							   	\
-} while (0) 								   	\
+#define break_foreach                                                \
+do {                                                                 \
+    __child_foreach = (BbChild *) -1;                                \
+    continue;                                                        \
+} while (0)                                                          \
 
-#define foreach_bbqueue(queue, child) 			   	\
-	for (										   	\
-		 (child) = (queue) ->first;					   \
-		 (child) != NULL;							  	\
-		 (child) = (child) ->next						 \
-	) 											   	\
-
-
-#define foreach_bbqueue_item(queue, item) 					   \
-	for (													   \
-		BbChild *__child_foreach = (queue) ->first,			  \
-		*__bb_loop = 0;										 \
-		__child_foreach != NULL;								\
-		__child_foreach = (__child_foreach != (BbChild *) -1) ?  \
-		 __child_foreach->next : NULL,						  \
-		__bb_loop = (BbChild*) 0								 \
-	) 														   \
-		for (												   \
-			item = __child_foreach->data;						\
-			__bb_loop != (BbChild*) 1;						  \
-			__bb_loop = (BbChild*) 1							\
-		) 													   \
-
-#define foreach_bbqueue_item_counter(queue, item, counter) 	   \
-	for (													   \
-		BbChild *__child_foreach = (queue) ->first,			  \
-		*__bb_loop = 0;										 \
-		__child_foreach != NULL;								\
-		__child_foreach = (__child_foreach != (BbChild *) -1) ?  \
-		 __child_foreach->next : NULL,						  \
-		__bb_loop = (BbChild*) 0,\
-		counter++								 \
-	) 														   \
-		for (												   \
-			item = __child_foreach->data;						\
-			__bb_loop != (BbChild*) 1;						  \
-			__bb_loop = (BbChild*) 1							\
-		) 													   \
-
-#define is_last_bbqueue_item(queue) 		\
-	 ((__child_foreach == (queue) ->last))
-
-#define foreach_bbqueue_item_raw(queue, item) 				   \
-	for (													   \
-		BbChild *__child_foreach = (queue) ->first,			  \
-		*__bb_loop = 0;										 \
-		__child_foreach != NULL;								\
-		__child_foreach = (__child_foreach != (BbChild *) -1) ?  \
-		 __child_foreach->next : NULL,						  \
-		__bb_loop = (BbChild*) 0								 \
-	) 														   \
-		for (												   \
-			item = (int) __child_foreach->data;				\
-			__bb_loop != (BbChild*) 1;						  \
-			__bb_loop = (BbChild*) 1							\
-		) 													   \
-
-#define foreach_bbqueue_item_reversed(queue, item) 			  \
-	for (													   \
-		BbChild *__child_foreach = (queue) ->last,				\
-		*__bb_loop = 0;										 \
-		__child_foreach != NULL;								\
-		__child_foreach = (__child_foreach != (BbChild *) -1) ?  \
-		 __child_foreach->prev : NULL,						  \
-		__bb_loop = (BbChild*) 0								 \
-	) 														   \
-		for (												   \
-			item = __child_foreach->data;					 \
-			__bb_loop != (BbChild*) 1;						  \
-			__bb_loop = (BbChild*) 1							\
-		) 													   \
+#define foreach_bbqueue(queue, child)                                \
+    for (                                                            \
+         (child) = (queue)->first;                                   \
+         (child) != NULL;                                            \
+         (child) = (child)->next                                     \
+    )                                                                \
 
 
-#define foreach_bbqueue_item_reversed_raw(queue, item) 			\
-	for (													   	\
-		BbChild *__child_foreach = (queue) ->last,				\
-		*__bb_loop = 0;										 	\
-		__child_foreach != NULL;								\
-		__child_foreach = (__child_foreach != (BbChild *) -1) ?  \
-		 __child_foreach->prev : NULL,						  	\
-		__bb_loop = (BbChild*) 0								 	\
-	) 														   	\
-		for (												   	\
-			item = (int) __child_foreach->data;			 	\
-			__bb_loop != (BbChild*) 1;						  	\
-			__bb_loop = (BbChild*) 1							\
-		) 													   	\
+#define foreach_bbqueue_item(queue, item)                            \
+    for (                                                            \
+        BbChild *__child_foreach = (queue)->first,                   \
+        *__bb_loop = 0;                                              \
+        __child_foreach != NULL;                                     \
+        __child_foreach = (__child_foreach != (BbChild *) -1) ?      \
+         __child_foreach->next : NULL,                               \
+        __bb_loop = (BbChild*) 0                                     \
+    )                                                                \
+        for (                                                        \
+            item = __child_foreach->data;                            \
+            __bb_loop != (BbChild*) 1;                               \
+            __bb_loop = (BbChild*) 1                                 \
+        )                                                            \
+
+#define foreach_bbqueue_item_counter(queue, item, counter)           \
+    for (                                                            \
+        BbChild *__child_foreach = (queue)->first,                   \
+        *__bb_loop = 0;                                              \
+        __child_foreach != NULL;                                     \
+        __child_foreach = (__child_foreach != (BbChild *) -1) ?      \
+         __child_foreach->next : NULL,                               \
+        __bb_loop = (BbChild*) 0,                                    \
+        counter++                                                    \
+    )                                                                \
+        for (                                                        \
+            item = __child_foreach->data;                            \
+            __bb_loop != (BbChild*) 1;                               \
+            __bb_loop = (BbChild*) 1                                 \
+        )                                                            \
+
+#define is_last_bbqueue_item(queue)                                  \
+     ((__child_foreach == (queue)->last))
+
+#define foreach_bbqueue_item_raw(queue, item)                        \
+    for (                                                            \
+        BbChild *__child_foreach = (queue)->first,                   \
+        *__bb_loop = 0;                                              \
+        __child_foreach != NULL;                                     \
+        __child_foreach = (__child_foreach != (BbChild *) -1) ?      \
+         __child_foreach->next : NULL,                               \
+        __bb_loop = (BbChild*) 0                                     \
+    )                                                                \
+        for (                                                        \
+            item = (int) __child_foreach->data;                      \
+            __bb_loop != (BbChild*) 1;                               \
+            __bb_loop = (BbChild*) 1                                 \
+        )                                                            \
+
+#define foreach_bbqueue_item_reversed(queue, item)                   \
+    for (                                                            \
+        BbChild *__child_foreach = (queue)->last,                    \
+        *__bb_loop = 0;                                              \
+        __child_foreach != NULL;                                     \
+        __child_foreach = (__child_foreach != (BbChild *) -1) ?      \
+         __child_foreach->prev : NULL,                               \
+        __bb_loop = (BbChild*) 0                                     \
+    )                                                                \
+        for (                                                        \
+            item = __child_foreach->data;                            \
+            __bb_loop != (BbChild*) 1;                               \
+            __bb_loop = (BbChild*) 1                                 \
+        )                                                            \
 
 
-#define bb_queue_add_array(queue, data, count) 	  	\
-do {													\
-	int __array_counter;								\
-	for (__array_counter = 0;					   	\
-		 __array_counter < (count);				  	\
-		 __array_counter++) {					   	\
-		bb_queue_add ((queue) , (data) [__array_counter]);	\
-	}											   	\
-} while (0) 										 	\
+#define foreach_bbqueue_item_reversed_raw(queue, item)               \
+    for (                                                            \
+        BbChild *__child_foreach = (queue)->last,                    \
+        *__bb_loop = 0;                                              \
+        __child_foreach != NULL;                                     \
+        __child_foreach = (__child_foreach != (BbChild *) -1) ?      \
+         __child_foreach->prev : NULL,                               \
+        __bb_loop = (BbChild*) 0                                     \
+    )                                                                \
+        for (                                                        \
+            item = (int) __child_foreach->data;                      \
+            __bb_loop != (BbChild*) 1;                               \
+            __bb_loop = (BbChild*) 1                                 \
+        )                                                            \
 
-#define bb_queue_add_raw(queue, data) 		\
-	 (bb_queue_add (queue, (void*) (data)) )
 
-#define bb_queue_local_decl() \
-{\
-	.len = 0,\
-	.first = NULL,\
-	.last = NULL\
+#define bb_queue_add_array(queue, data, count)                       \
+do {                                                                 \
+    int __array_counter;                                             \
+    for (__array_counter = 0;                                        \
+         __array_counter < (count);                                  \
+         __array_counter++) {                                        \
+        bb_queue_add ((queue) , (data) [__array_counter]);           \
+    }                                                                \
+} while (0)                                                          \
+
+#define bb_queue_add_raw(queue, data)                                \
+     (bb_queue_add (queue, (void*) (data)) )
+
+#define bb_queue_local_decl()                                        \
+{                                                                    \
+    .len = 0,                                                        \
+    .first = NULL,                                                   \
+    .last = NULL                                                     \
 }
 
 /**
