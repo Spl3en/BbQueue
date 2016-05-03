@@ -847,7 +847,7 @@ bb_child_get_prev (BbChild *child)
 void
 bb_child_debug (BbChild *child)
 {
-	printf ("0x%x\n", (int) child->data);
+	printf ("0x%p\n", child->data);
 }
 
 void
@@ -865,7 +865,7 @@ bb_child_debug_integer (BbChild *child)
 void
 bb_child_debug_raw_integer (BbChild *child)
 {
-	printf ("%d\n", (int) child->data);
+	printf ("%p\n", child->data);
 }
 
 void
