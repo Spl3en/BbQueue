@@ -79,8 +79,8 @@
 /* Dépendances */
 #include <stdio.h>
 #include <stdlib.h>
-#include "Utils/Utils.h"
-
+#include <stdbool.h>
+ 
 /*
 *   Working Macros
 */

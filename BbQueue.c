@@ -865,7 +865,7 @@ bb_child_debug_integer (BbChild *child)
 void
 bb_child_debug_raw_integer (BbChild *child)
 {
-	printf ("%p\n", child->data);
+	printf ("%lld\n", (long long int) child->data);
 }
 
 void
