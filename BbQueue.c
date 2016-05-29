@@ -1,4 +1,5 @@
 #include "BbQueue.h"
+#include <stdint.h>
 
 #define __DEBUG_OBJECT__ "BbQueue"
 #include "dbg/dbg.h"
@@ -865,7 +866,7 @@ bb_child_debug_integer (BbChild *child)
 void
 bb_child_debug_raw_integer (BbChild *child)
 {
-	printf ("%lld\n", (long long int) child->data);
+	printf ("%zd\n", (uintptr_t) child->data);
 }
 
 void
